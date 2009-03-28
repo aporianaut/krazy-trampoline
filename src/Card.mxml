@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100" height="80">
+	
+	<mx:Canvas x="0" y="0" width="100" height="80" borderStyle="solid" borderThickness="4" backgroundColor="#CFCFCF" borderColor="#000000">
+		<mx:Label text="Carrot" id="cardLabel" width="100" height="80" fontSize="21" fontWeight="bold" x="3" y="17"/>
+	</mx:Canvas>
+	
+</mx:Canvas>

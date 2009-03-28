@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.lingualgames.krazykitchen.ICardHolder" width="150" height="50" creationComplete="creationComplete();" click="onClick();" backgroundImage="com/lingualgames/krazykitchen/img/sushiboat.png">
+	<mx:Script>
+	    <![CDATA[  
+	    
+	    private var kk:KrazyKitchen;
+	    
+	    private function creationComplete():void {
+	    	kk = this.parentApplication as KrazyKitchen;
+	    }
+	    
+	    private function onClick():void {
+	    	if(kk.hand.selectedHandSlot) {
+	    		kk.hand.selectedHandSlot.swapContents(this);
+	    		return;
+	    	}
+	    	if(card) catapult();
+	    }
+	    
+		internal function catapult():void {
+			if (card == null) return;
+			kk.cardMover.catapult(this);
+		}
+		
+		public function get card():Card {
+			if (numChildren == 0) {
+				return null;
+			}
+			return getChildAt(0) as Card;
+		}    
+		
+		public function set card(toSet:Card):void {
+			if (numChildren > 0) {
+				this.removeAllChildren();
+			}
+			if(toSet != null) this.addChild(toSet);
+		}    
+	    
+	    ]]>
+	</mx:Script>
+		
+</mx:Canvas>

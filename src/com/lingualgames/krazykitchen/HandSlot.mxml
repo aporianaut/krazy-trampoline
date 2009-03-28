@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:GridItem xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.lingualgames.krazykitchen.ICardHolder" click="onClick(event);" creationComplete="onCreationComplete();">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.TweenEvent;
+			import mx.effects.Move;
+			
+			internal var free:Boolean = true;
+			private var kk:KrazyKitchen;
+			
+			private function onCreationComplete():void {
+				kk = this.parentApplication as KrazyKitchen;
+			}
+			
+			internal function onCardReceived(e:TweenEvent):void {
+				var card:Card = (e.target as Move).target as Card;
+				card.x = 0;
+				card.y = 0;
+				parentApplication.removeChild(card);
+				addChild(card);
+			}
+			
+			private function onClick(e:Event):void {
+				if(kk.hand.selectedHandSlot != this) {
+					if(kk.hand.selectedHandSlot == null) {
+						if (card) select();
+					}
+					else {
+						kk.hand.selectedHandSlot.swapContents(this);	
+					}
+				} else {
+					unselect();
+				}
+			}
+			
+			public function swapContents(toSwapWith:ICardHolder):void {
+				var cardHere:Card = card;
+				var cardThere:Card = toSwapWith.card;
+				toSwapWith.card = cardHere;
+				this.card = cardThere;
+				
+				kk.hand.selectedHandSlot.unselect();
+			}
+			
+			public function select():void {
+				kk.hand.selectedHandSlot = this;
+				selectEffect.alphaFrom=.6;
+				selectEffect.alphaTo=.8;
+				selectEffect.blurXFrom=0;
+				selectEffect.blurXTo=50;
+				selectEffect.blurYFrom=0;
+				selectEffect.blurYTo=50;
+				selectEffect.play();
+			}
+			
+			public function unselect():void {
+				if(kk.hand.selectedHandSlot == this) {
+					kk.hand.selectedHandSlot = null;
+				} else {
+					trace("Error: tried unselecting a hand that wasn't the selected hand");
+				}
+				selectEffect.alphaFrom=.5;
+				selectEffect.alphaTo=0;
+				selectEffect.blurXFrom=0;
+				selectEffect.blurXTo=50;
+				selectEffect.blurYFrom=0;
+				selectEffect.blurYTo=50;
+				selectEffect.play();		
+			}
+			
+			public function get card():Card {
+				if (numChildren == 0) {
+					return null;
+				}
+				return getChildAt(0) as Card;
+			}
+			
+			public function set card(toSet:Card):void {
+				if (numChildren > 0) {
+					this.removeAllChildren();
+				}
+				if(toSet != null) this.addChild(toSet);
+			}    
+		]]>
+	</mx:Script>
+	<mx:Glow  id="selectEffect" target="{this}" color="0x00FF00"  />
+</mx:GridItem>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="*">
+	<mx:Script>
+	    <![CDATA[  
+	    
+	    	import mx.events.*;
+	    	import mx.controls.*;
+	    	import mx.containers.*;
+	    	import mx.managers.*;
+	    	import mx.core.*;
+	    
+			private function dragIt(event:MouseEvent):void   {
+
+                // Get the drag initiator component from the event object.
+                var dragInitiator:Card = event.currentTarget as Card;
+    
+                // Create a DragSource object.
+                var dragSource:DragSource = new DragSource();
+    
+                // Add the data to the object.
+                //dragSource.addData(value, 'cardID');
+    
+                // Create a copy of the coin image to use as a drag proxy.
+                var dragProxy:Card = new Card();
+                //dragProxy.cardLabel.text = dragInitiator.cardLabel.text;
+                //dragProxy.source = event.currentTarget.;
+    
+                // Call the DragManager doDrag() method to start the drag. 
+
+                DragManager.doDrag(dragInitiator, dragSource, event, dragProxy);
+            }
+
+            // Called if the user drags a drag proxy onto the drop target.
+            private function dragEnterHandler(event:DragEvent):void   {
+
+                // Get the drop target component from the event object.
+                var dropTarget:UIComponent=event.currentTarget as UIComponent;
+    
+                // Accept the drag only if the user is dragging data 
+                // identified by the 'value' format value.
+
+               /* if (event.dragSource.hasFormat('cardID')) 
+                {
+                    // Make the border of the Box thicker to 
+                    // visually signal to the user that they can 
+                    // drop the coin there.
+
+                    dropTarget.setStyle("borderThickness", 5);
+                    
+                    // Accept the drop.
+                    DragManager.acceptDragDrop(dropTarget);
+                }*/
+                //if(dropTarget isOfTypePanel) {
+                DragManager.acceptDragDrop(dropTarget);
+                
+            }
+
+            
+            // Called if the user drags the drag proxy away from the drop target.
+            private function dragExitHandler(event:DragEvent):void    {
+
+                // Get the drop target component from the event object.
+               // var dropTarget:Box=event.currentTarget as Box;                
+                
+                // Set the border of the Box to its default value
+                // to visually indicate that the user is no longer 
+                // over the drop target.
+
+                //revertBoxBorder();                
+            }                    
+            
+            // Called if the target accepts the dragged object and the user 
+            // releases the mouse button while over the drop target. 
+            private function dragDropHandler(event:DragEvent):void   {
+
+                // Get the data identified by the color format from the drag source.
+                /*var value:uint = event.dragSource.dataForFormat('value') as uint;
+
+                // Add the value to the total 
+
+                totalValue += value;
+                
+                // Set the border of the Box to its default value
+                revertBoxBorder();            */
+                (event.dragInitiator.parent as UIComponent).removeChild(event.dragInitiator as DisplayObject);
+                (event.target as UIComponent).addChild(event.dragInitiator as DisplayObject);
+                    
+            }
+      ]]>
+	</mx:Script>
+
+	<mx:Panel x="10" y="338" width="617" height="161" layout="absolute" id="hand" title="Your Hand">
+		<mx:Grid x="10" y="10" >
+			<mx:GridRow width="100%" height="100%">
+				<mx:GridItem width="100" height="80" borderStyle="solid" backgroundColor="#000000" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+				</mx:GridItem>
+				<mx:GridItem width="100" height="80" borderStyle="solid" backgroundColor="#000000" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+				</mx:GridItem>
+				<mx:GridItem width="100" height="80" borderStyle="solid" backgroundColor="#000000" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+				</mx:GridItem>
+				<mx:GridItem width="100" height="80" borderStyle="solid" backgroundColor="#000000" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+				</mx:GridItem>
+				<mx:GridItem width="100" height="80" borderStyle="solid" backgroundColor="#000000" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+				</mx:GridItem>
+			</mx:GridRow>
+		</mx:Grid>
+	</mx:Panel>
+	<mx:Panel x="10" y="10" width="341" height="303" layout="absolute" title="River" id="riverPanel" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+		<ns1:Card x="10" y="10" id="card0" mouseMove="dragIt(event);">
+		</ns1:Card>
+		<ns1:Card x="118" y="10" id="card1" mouseMove="dragIt(event);">
+		</ns1:Card>
+	</mx:Panel>
+	<!--<mx:Panel x="389" y="10" width="250" height="200" layout="absolute" id="handPanel" title="hand" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);" >
+	</mx:Panel>-->
+</mx:Application>

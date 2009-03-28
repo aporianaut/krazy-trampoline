@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="creationComplete();" layout="absolute" xmlns:kk="com.lingualgames.krazykitchen.*">
+	<mx:Script>
+	    <![CDATA[
+	    	import com.lingualgames.krazykitchen.*;
+	    
+	    	import mx.events.*;
+	    	import mx.controls.*;
+	    	import mx.containers.*;
+	    	import mx.managers.*;
+	    	import mx.core.*;
+	    	
+	    	public var cardMover:CardMover;
+	    	
+	    	private function creationComplete():void {
+	    		cardMover = new CardMover(this);
+	    	}
+	    
+			private function dragIt(event:MouseEvent):void   {
+
+                // Get the drag initiator component from the event object.
+                var dragInitiator:Card = event.currentTarget as Card;
+    
+                // Create a DragSource object.
+                var dragSource:DragSource = new DragSource();
+    
+                // Add the data to the object.
+                //dragSource.addData(value, 'cardID');
+    
+                // Create a copy of the coin image to use as a drag proxy.
+                var dragProxy:Card = new Card();
+                //dragProxy.cardLabel.text = dragInitiator.cardLabel.text;
+                //dragProxy.source = event.currentTarget.;
+    
+                // Call the DragManager doDrag() method to start the drag. 
+
+                DragManager.doDrag(dragInitiator, dragSource, event, dragProxy);
+            }
+
+            // Called if the user drags a drag proxy onto the drop target.
+            private function dragEnterHandler(event:DragEvent):void   {
+
+                // Get the drop target component from the event object.
+                var dropTarget:UIComponent=event.currentTarget as UIComponent;
+    
+                // Accept the drag only if the user is dragging data 
+                // identified by the 'value' format value.
+
+               /* if (event.dragSource.hasFormat('cardID')) 
+                {
+                    // Make the border of the Box thicker to 
+                    // visually signal to the user that they can 
+                    // drop the coin there.
+
+                    dropTarget.setStyle("borderThickness", 5);
+                    
+                    // Accept the drop.
+                    DragManager.acceptDragDrop(dropTarget);
+                }*/
+                //if(dropTarget isOfTypePanel) {
+                DragManager.acceptDragDrop(dropTarget);
+                
+            }
+
+            
+            // Called if the user drags the drag proxy away from the drop target.
+            private function dragExitHandler(event:DragEvent):void    {
+
+                // Get the drop target component from the event object.
+               // var dropTarget:Box=event.currentTarget as Box;                
+                
+                // Set the border of the Box to its default value
+                // to visually indicate that the user is no longer 
+                // over the drop target.
+
+                //revertBoxBorder();                
+            }                    
+            
+            // Called if the target accepts the dragged object and the user 
+            // releases the mouse button while over the drop target. 
+            private function dragDropHandler(event:DragEvent):void   {
+
+                // Get the data identified by the color format from the drag source.
+                /*var value:uint = event.dragSource.dataForFormat('value') as uint;
+
+                // Add the value to the total 
+
+                totalValue += value;
+                
+                // Set the border of the Box to its default value
+                revertBoxBorder();            */
+                (event.dragInitiator.parent as UIComponent).removeChild(event.dragInitiator as DisplayObject);
+                (event.target as UIComponent).addChild(event.dragInitiator as DisplayObject);
+                    
+            }
+      ]]>
+	</mx:Script>
+
+	<kk:Hand x="10" y="338" width="617" height="161" layout="absolute" id="hand" title="Your Hand" />
+	<mx:Panel x="10" y="10" width="601" height="320" layout="absolute" title="River" id="river" dragEnter="dragEnterHandler(event);" dragExit="dragExitHandler(event);" dragDrop="dragDropHandler(event);">
+		<kk:SushiBoat x="49" y="65">
+			<kk:Card x="35" y="3" id="card0" mouseMove="dragIt(event);">
+			</kk:Card>
+		</kk:SushiBoat>
+		<kk:SushiBoat x="262" y="88">
+			<kk:Card x="33" y="2" id="card1" mouseMove="dragIt(event);">
+			</kk:Card>
+		</kk:SushiBoat>
+	</mx:Panel>
+</mx:Application>

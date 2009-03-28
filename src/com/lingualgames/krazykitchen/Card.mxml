@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" x="35" y="4" width="101" height="38" backgroundColor="#FFFFAA" borderColor="#000000" backgroundAlpha=".75" text="Theg Trampolines" fontSize="17" textAlign="center" fontWeight="normal" fontFamily="verdana" letterSpacing="-1" leading="-2" paddingTop="-4" paddingBottom="-2">
+<mx:Move id="moveEffect" duration="1500" target="{this}"/>
+</mx:TextArea>

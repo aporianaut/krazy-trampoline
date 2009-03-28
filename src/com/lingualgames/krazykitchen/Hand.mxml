@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:kk="com.lingualgames.krazykitchen.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.GridItem;
+			
+			internal var selectedHandSlot:HandSlot = null;
+			
+			/**
+			 *  Next empty slot; null if all full
+			 */
+			internal function getNextAvailableSlot():HandSlot {
+				for each (var child:HandSlot in handDisplay.getChildren()) {
+					if (child.free) {
+						return child;
+					}
+				}
+				
+				return null;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Grid x="10" y="10">
+		<mx:GridRow id="handDisplay" width="100%" height="100%">
+			<kk:HandSlot width="100" height="80" id="hs1" borderStyle="solid" backgroundColor="#000000" />
+			<kk:HandSlot width="100" height="80" id="hs2" borderStyle="solid" backgroundColor="#000000" />
+			<kk:HandSlot width="100" height="80" id="hs3" borderStyle="solid" backgroundColor="#000000" />
+			<kk:HandSlot width="100" height="80" id="hs4" borderStyle="solid" backgroundColor="#000000" />
+			<kk:HandSlot width="100" height="80" id="hs5" borderStyle="solid" backgroundColor="#000000" />
+		</mx:GridRow>
+	</mx:Grid>
+</mx:Panel>
